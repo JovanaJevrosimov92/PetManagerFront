@@ -3,6 +3,9 @@ package PetAppFrontend.controller;
 import PetAppFrontend.model.LoginUserDTO;
 import PetAppFrontend.model.RegisterUserDTO;
 import PetAppFrontend.service.UserApiService;
+//import PetAppFrontend.service.UserSessionStore;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Arrays;
 
 @Controller
 public class UserController {
@@ -31,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@Valid @ModelAttribute("loginUserDTO") LoginUserDTO loginUserDTO,BindingResult bindingResult, Model model,  RedirectAttributes redirectAttributes) {
+    public String loginUser(@Valid @ModelAttribute("loginUserDTO") LoginUserDTO loginUserDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("loginUserDTO", loginUserDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.loginUserDTO", bindingResult);
@@ -43,10 +48,21 @@ public class UserController {
         String loginResponse = userApiService.loginUser(loginUserDTO);
 
         if (loginResponse.equals("Login successful")) {
+//            String sessionId = Arrays.stream(request.getCookies())
+//                    .filter(cookie -> "JSESSIONID".equals(cookie.getName()))
+//                    .map(Cookie::getValue)
+//                    .findFirst()
+//                    .orElse(null);
+//            System.out.println("JSESSIONID posle logovanje: "+sessionId);
+//
+//            if (sessionId != null) {
+//                // Sačuvaj sesiju globalno (možeš koristiti HttpSession ili statićku promenljivu)
+//                UserSessionStore.setSessionId(sessionId);
+//            }
             return "redirect:/home";
         } else {
             model.addAttribute("error", loginResponse);
-            return "login";
+            return "redirect:/login";
         }
     }
 

@@ -3,45 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pet Manager - Add Pet</title>
+    <title>Add Pet</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
 <header>
-    <h1>Add Your Pet</h1>
+    <h1>Add a New Pet</h1>
 </header>
 
 <main>
     <section class="form-section">
-        <div class="form-container">
-            <h2>Pet Details</h2>
-            <form th:action="@{/pets/add}" th:object="${addPetDTO}" method="post">
-                <div>
-                    <label for="name">Pet's Name:</label>
-                    <input type="text" id="name" th:field="*{name}" placeholder="Enter pet's name" required>
-                </div>
-                <div>
-                    <label for="typeName">Type:</label>
-                    <select id="typeName" th:field="*{typeName}" required>
-                        <option value="" disabled selected>Select Type</option>
-                        <option value="Dog">Dog</option>
-                        <option value="Cat">Cat</option>
-                        <option value="Parrot">Parrot</option>
-                        <option value="Fish">Fish</option>
-                        <option value="Rabbit">Rabbit</option>
-                        <option value="Turtle">Turtle</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="age">Age:</label>
-                    <input type="number" id="age" th:field="*{age}" placeholder="Enter pet's age" required>
-                </div>
-                <div>
-                    <button type="submit" class="btn">Add Pet</button>
-                </div>
-            </form>
-        </div>
-        <img th:src="@{/images/golden-retriever.jpg}" alt="Golden Retriever" class="form-image">
+        <form th:action="@{/pets/add}" th:object="${addPetDTO}" method="post">
+            <!-- Ime ljubimca -->
+            <div>
+                <label for="name">Pet Name:</label>
+                <input type="text" id="name" th:field="*{name}" placeholder="Enter pet's name" required>
+                <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            </div>
+
+            <!-- Godine ljubimca -->
+            <div>
+                <label for="age">Pet Age:</label>
+                <input type="number" id="age" th:field="*{age}" placeholder="Enter pet's age" required>
+                <div class="error" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
+            </div>
+
+            <!-- Tip ljubimca -->
+            <div>
+                <label for="type">Pet Type:</label>
+                <select id="type" th:field="*{type}" required>
+                    <option value="" disabled selected>Select pet type</option>
+                    <option th:each="petType : ${petTypes}"
+                            th:value="${petType}"
+                            th:text="${petType}"></option>
+                </select>
+                <div class="error" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></div>
+            </div>
+
+            <!-- Vakcinacija -->
+            <div>
+                <label for="vaccinated">Vaccinated:</label>
+                <select id="vaccinated" th:field="*{vaccinated}" required>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+                <div class="error" th:if="${#fields.hasErrors('vaccinated')}" th:errors="*{vaccinated}"></div>
+            </div>
+
+            <!-- Dugme za dodavanje -->
+            <div>
+                <button type="submit" class="btn">Add Pet</button>
+            </div>
+        </form>
+
+        <!-- Poruka o uspehu -->
+        <p class="success" th:if="${successMessage != null}" th:text="${successMessage}"></p>
+
+        <!-- Opšta poruka o grešci -->
+        <p class="error" th:if="${errorMessage != null}" th:text="${errorMessage}"></p>
     </section>
 </main>
 
