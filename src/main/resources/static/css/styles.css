@@ -117,52 +117,6 @@ header h1 {
     background-color: #4E8B37;
 }
 
-/* Naslov za galeriju */
-.image-gallery h2 {
-    text-align: center;
-    color: #FFD700;
-    font-size: 2em;
-    margin-bottom: 20px;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-}
-
-/* Galerija slika */
-.image-gallery {
-    text-align: center;
-    margin: 20px auto;
-}
-
-.gallery {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.gallery-image {
-    width: 200px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.gallery-image:hover {
-    transform: scale(1.1);
-}
-
-/* Footer */
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-}
-
 /* Forma */
 .form-section {
     margin: 50px auto;
@@ -189,7 +143,7 @@ footer {
     color: white;
 }
 
-.form-section input {
+.form-section input, .form-section select {
     width: 90%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -202,7 +156,7 @@ footer {
     color: #bbb;
 }
 
-.form-section input:focus {
+.form-section input:focus, .form-section select:focus {
     outline: none;
     border-color: #4CAF50;
 }
@@ -238,4 +192,11 @@ footer {
 
 .form-section .text-link:hover {
     color: #388E3C;
+}
+
+
+.success {
+    color: #4CAF50; /* Zelena za uspešne poruke */
+    font-size: 1rem;
+    margin-top: 0.5rem;
 }
